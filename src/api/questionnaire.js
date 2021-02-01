@@ -22,10 +22,11 @@ export const getQuestionnaire = id => {
 export const getResult = data => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await axios.post('', data);
+      const url = 'https://backend-experto-obstetra.herokuapp.com/api/requeriments';
+      const response = await axios.post(url, data);
       resolve(response);
     } catch (error) {
-      reject(error);
+      reject("Ocurrio un error inesperado");
     }
   });
 }

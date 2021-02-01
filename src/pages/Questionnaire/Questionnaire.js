@@ -9,11 +9,13 @@ import { getQuestionnaire } from "../../api/questionnaire";
 import { useParams } from "react-router-dom";
 import FormQuestionnaire from "../../components/FormQuestionnaire";
 import './Questionnaire.scss';
+import ResultsList from "../../components/ResultsList";
 
 const ControlQuestionnaire = () => {
   const { id } = useParams();
   const [dataQuestionnaire, setDataQuestionnaire] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [responseList, setResponseList] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -37,15 +39,19 @@ const ControlQuestionnaire = () => {
             <Card style={{width: "100%"}}>
               <Card.Content header='Formulario de control' />
               <Card.Content>
-                <FormQuestionnaire />
+                <FormQuestionnaire 
+                  setResponseList={setResponseList}
+                />
               </Card.Content>              
             </Card>
           </Grid.Column>
           <Grid.Column width={8}>
-             <Card style={{width: "100%"}}>
+            <Card style={{width: "100%"}}>
               <Card.Content header='Resultados' />
               <Card.Content>
-                <Message info content="No hay resultados para mostrar." />
+                <ResultsList 
+                  results={responseList}
+                />
               </Card.Content>              
             </Card>
           </Grid.Column>
