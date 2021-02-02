@@ -35,7 +35,7 @@ const ControlQuestionnaire = () => {
       <h1>{dataQuestionnaire.name}</h1>
       <Grid>
         <Grid.Row>
-          <Grid.Column width={8}>
+          <Grid.Column mobile={16} tablet={16} computer={8}>
             <Card style={{width: "100%"}}>
               <Card.Content header='Formulario de control' />
               <Card.Content>
@@ -45,7 +45,7 @@ const ControlQuestionnaire = () => {
               </Card.Content>              
             </Card>
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column mobile={16} tablet={16} computer={8}>
             <Card style={{width: "100%"}}>
               <Card.Content header='Resultados' />
               <Card.Content>
