@@ -1,6 +1,6 @@
 import { Message } from "semantic-ui-react";
 
-const Result = ({ msg, indicador, estado }) => {
+const Result = ({ msg, indicador, estado, label }) => {
   
   const getColorMessage = (estado) => {
     if(estado === 'verde'){
@@ -16,7 +16,7 @@ const Result = ({ msg, indicador, estado }) => {
   
   return ( 
     <Message color={getColorMessage(estado)}>
-      <Message.Header>{indicador}</Message.Header>
+      <Message.Header>{label}</Message.Header>
       {msg}
     </Message>
   );
