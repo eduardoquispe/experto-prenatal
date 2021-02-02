@@ -24,13 +24,14 @@ const FormQuestionnaire = ({ setResponseList }) => {
       try {
         const response = await getResult(data);
         toast.success('Resultados obtenidos correctamente');
+        setLoading(false);
         setResponseList(response.data)
       } catch (error) {
         setLoading(false);
         console.log(error);
         toast.error(error);
       }
-    },
+    }
   });
 
   return (
