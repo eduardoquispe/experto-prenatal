@@ -2,4 +2,9 @@
   .content-action {
     text-align: right;
   }
+  input:disabled {
+    color: #000 !important;
+    font-size: 2rem;
+    opacity: 1 !important;
+  }
 }

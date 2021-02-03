@@ -5,13 +5,15 @@ import * as yup from "yup";
 import "./FormQuestionnaire.scss";
 import { getResult } from "../../api/questionnaire";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
 const FormQuestionnaire = ({ setResponseList }) => {
 
   const [loading, setLoading] = useState(null);
+  const { id } = useParams();
 
   const formik = useFormik({
-    initialValues: initialState(),
+    initialValues: initialState(id),
     validationSchema: yup.object(validationSchema()),
     onSubmit: async (values) => {
       const data = {
@@ -54,7 +56,20 @@ const FormQuestionnaire = ({ setResponseList }) => {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={7}>
-              <label>Peso gestante</label>
+              <label>Peso pre-gestante (kg)</label>
+            </Grid.Column>
+            <Grid.Column width={9}>
+              <Form.Input
+                type="text"
+                name=""
+                disabled
+                defaultValue={65}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={7}>
+              <label>Peso gestante (kg)</label>
             </Grid.Column>
             <Grid.Column width={9}>
               <Form.Input
@@ -68,7 +83,7 @@ const FormQuestionnaire = ({ setResponseList }) => {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={7}>
-              <label>Temperatura</label>
+              <label>Temperatura (°C)</label>
             </Grid.Column>
             <Grid.Column width={9}>
               <Form.Input
@@ -88,20 +103,21 @@ const FormQuestionnaire = ({ setResponseList }) => {
               <Form.Group>
                 <Form.Input
                   type="text"
-                  width={9}
+                  width={8}
                   name="presionArterialNumerador"
                   value={formik.values.presionArterialNumerador}
                   onChange={formik.handleChange}
                   error={formik.errors.presionArterialNumerador}
                 />
-                {" / "}
+                <span style={{fontSize: "2rem", marginTop: ".5rem"}} >/</span>
                 <Form.Input
                   type="text"
-                  width={9}
+                  width={8}
+                  disabled
                   name="presionArterialDenominador"
-                  value={formik.values.presionArterialDenominador}
-                  onChange={formik.handleChange}
-                  error={formik.errors.presionArterialDenominador}
+                  defaultValue={120}
+                  // onChange={formik.handleChange}
+                  // error={formik.errors.presionArterialDenominador}
                 />
               </Form.Group>
             </Grid.Column>
@@ -122,7 +138,7 @@ const FormQuestionnaire = ({ setResponseList }) => {
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={7}>
-              <label>Altura uterina</label>
+              <label>Altura uterina (cm)</label>
             </Grid.Column>
             <Grid.Column width={9}>
               <Form.Input
@@ -327,16 +343,16 @@ const FormQuestionnaire = ({ setResponseList }) => {
             <Grid.Column width={9}>
               <Form.Select
                 placeholder="--Seleccione--"
-                name="indiceHierro"
+                name="indiceFierro"
                 options={[
                   { key: "si", text: "Si consume", value: "si consume" },
                   { key: "no", text: "No consume", value: "no consume" },
                 ]}
-                value={formik.values.indiceHierro}
+                value={formik.values.indiceFierro}
                 onChange={(_, { value }) =>
-                  formik.setFieldValue("indiceHierro", value)
+                  formik.setFieldValue("indiceFierro", value)
                 }
-                error={formik.errors.indiceHierro}
+                error={formik.errors.indiceFierro}
               />
             </Grid.Column>
           </Grid.Row>
@@ -506,10 +522,10 @@ const FormQuestionnaire = ({ setResponseList }) => {
             <Grid.Column width={9}>
               <Form.Input
                 type="text"
-                name="estabaDeLaAtencion"
-                value={formik.values.estabaDeLaAtencion}
+                name="establecimientoDeLaAtencion"
+                value={formik.values.establecimientoDeLaAtencion}
                 onChange={formik.handleChange}
-                error={formik.errors.estabaDeLaAtencion}
+                error={formik.errors.establecimientoDeLaAtencion}
               />
             </Grid.Column>
           </Grid.Row>
@@ -574,7 +590,7 @@ const initialState = (numeroAtencion = 2) => ({
   edema: "",
   reflejoOseotendinoso: "",
   examenDePezon: "",
-  indiceHierro: "",
+  indiceFierro: "",
   indiceAcidoFolio: "",
   indiceCalcio: "",
   OrientacionConsejeria: "",
@@ -583,7 +599,7 @@ const initialState = (numeroAtencion = 2) => ({
   cita: "",
   visitaDomicilia: "",
   planParto: "",
-  estabaDeLaAtencion: "",
+  establecimientoDeLaAtencion: "",
   responsable: "",
   numeroFormatoSis: "",
 });
@@ -616,12 +632,6 @@ const validationSchema = () => {
       .positive("Solo números postivo.")
       .integer("Solo números enteros.")
       .required("Este campo es requerido"),
-    presionArterialDenominador: yup
-      .number()
-      .typeError("Solo se permiten números.")
-      .positive("Solo números postivo.")
-      .integer("Solo números enteros.")
-      .required("Este campo es requerido"),
     pulsoMaterno: yup
       .number()
       .typeError("Solo se permiten números.")
@@ -642,7 +652,7 @@ const validationSchema = () => {
     edema: yup.string().required("Este campo es requerido."),
     reflejoOseotendinoso: yup.string().required("Este campo es requerido."),
     examenDePezon: yup.string().required("Este campo es requerido."),
-    indiceHierro: yup.string().required("Este campo es requerido."),
+    indiceFierro: yup.string().required("Este campo es requerido."),
     indiceAcidoFolio: yup.string().required("Este campo es requerido."),
     indiceCalcio: yup.string().required("Este campo es requerido."),
     OrientacionConsejeria: yup.string().required("Este campo es requerido."),
@@ -651,8 +661,10 @@ const validationSchema = () => {
     cita: yup.string().required("Este campo es requerido."),
     visitaDomicilia: yup.string().required("Este campo es requerido."),
     planParto: yup.string().required("Este campo es requerido."),
-    estabaDeLaAtencion: yup.string().required("Este campo es requerido."),
+    establecimientoDeLaAtencion: yup.string().required("Este campo es requerido."),
     responsable: yup.string().required("Este campo es requerido."),
-    numeroFormatoSis: yup.string().required("Este campo es requerido."),
+    numeroFormatoSis: yup.number()
+      .typeError("Solo se permiten número")
+      .required("Este campo es requerido."),
   };
 };
