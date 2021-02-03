@@ -345,8 +345,8 @@ const FormQuestionnaire = ({ setResponseList }) => {
                 placeholder="--Seleccione--"
                 name="indiceFierro"
                 options={[
-                  { key: "si", text: "Si consume", value: "si consume" },
-                  { key: "no", text: "No consume", value: "no consume" },
+                  { key: "si", text: "Si consume", value: "si" },
+                  { key: "no", text: "No consume", value: "no" },
                 ]}
                 value={formik.values.indiceFierro}
                 onChange={(_, { value }) =>
@@ -365,8 +365,8 @@ const FormQuestionnaire = ({ setResponseList }) => {
                 placeholder="--Seleccione--"
                 name="indiceCalcio"
                 options={[
-                  { key: "si", text: "Si consume", value: "si consume" },
-                  { key: "no", text: "No consume", value: "no consume" }
+                  { key: "si", text: "Si consume", value: "si" },
+                  { key: "no", text: "No consume", value: "no" }
                 ]}
                 value={formik.values.indiceCalcio}
                 onChange={(_, { value }) =>
@@ -385,8 +385,8 @@ const FormQuestionnaire = ({ setResponseList }) => {
                 placeholder="--Seleccione--"
                 name="indiceAcidoFolio"
                 options={[
-                  { key: "si", text: "Si consume", value: "si consume" },
-                  { key: "no", text: "No consume", value: "no consume" }
+                  { key: "si", text: "Si consume", value: "si" },
+                  { key: "no", text: "No consume", value: "no" }
                 ]}
                 value={formik.values.indiceAcidoFolio}
                 onChange={(_, { value }) =>
