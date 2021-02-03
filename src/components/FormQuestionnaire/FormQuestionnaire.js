@@ -5,13 +5,15 @@ import * as yup from "yup";
 import "./FormQuestionnaire.scss";
 import { getResult } from "../../api/questionnaire";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
 const FormQuestionnaire = ({ setResponseList }) => {
 
   const [loading, setLoading] = useState(null);
+  const { id } = useParams();
 
   const formik = useFormik({
-    initialValues: initialState(),
+    initialValues: initialState(id),
     validationSchema: yup.object(validationSchema()),
     onSubmit: async (values) => {
       const data = {
@@ -49,6 +51,19 @@ const FormQuestionnaire = ({ setResponseList }) => {
                 value={formik.values.edadGestante}
                 onChange={formik.handleChange}
                 error={formik.errors.edadGestante}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={7}>
+              <label>Peso pre-gestante</label>
+            </Grid.Column>
+            <Grid.Column width={9}>
+              <Form.Input
+                type="text"
+                name=""
+                disabled
+                defaultValue={65}
               />
             </Grid.Column>
           </Grid.Row>
@@ -94,15 +109,15 @@ const FormQuestionnaire = ({ setResponseList }) => {
                   onChange={formik.handleChange}
                   error={formik.errors.presionArterialNumerador}
                 />
-                {" / "}
-                <Form.Input
+                {" / 120"}
+                {/* <Form.Input
                   type="text"
                   width={9}
                   name="presionArterialDenominador"
                   value={formik.values.presionArterialDenominador}
                   onChange={formik.handleChange}
                   error={formik.errors.presionArterialDenominador}
-                />
+                /> */}
               </Form.Group>
             </Grid.Column>
           </Grid.Row>
@@ -329,8 +344,8 @@ const FormQuestionnaire = ({ setResponseList }) => {
                 placeholder="--Seleccione--"
                 name="indiceHierro"
                 options={[
-                  { key: "si", text: "Si consume", value: "si consume" },
-                  { key: "no", text: "No consume", value: "no consume" },
+                  { key: "si", text: "Si consume", value: "si" },
+                  { key: "no", text: "No consume", value: "no" },
                 ]}
                 value={formik.values.indiceHierro}
                 onChange={(_, { value }) =>
@@ -349,8 +364,8 @@ const FormQuestionnaire = ({ setResponseList }) => {
                 placeholder="--Seleccione--"
                 name="indiceCalcio"
                 options={[
-                  { key: "si", text: "Si consume", value: "si consume" },
-                  { key: "no", text: "No consume", value: "no consume" }
+                  { key: "si", text: "Si consume", value: "si" },
+                  { key: "no", text: "No consume", value: "no" }
                 ]}
                 value={formik.values.indiceCalcio}
                 onChange={(_, { value }) =>
@@ -369,8 +384,8 @@ const FormQuestionnaire = ({ setResponseList }) => {
                 placeholder="--Seleccione--"
                 name="indiceAcidoFolio"
                 options={[
-                  { key: "si", text: "Si consume", value: "si consume" },
-                  { key: "no", text: "No consume", value: "no consume" }
+                  { key: "si", text: "Si consume", value: "si" },
+                  { key: "no", text: "No consume", value: "no" }
                 ]}
                 value={formik.values.indiceAcidoFolio}
                 onChange={(_, { value }) =>
@@ -506,10 +521,10 @@ const FormQuestionnaire = ({ setResponseList }) => {
             <Grid.Column width={9}>
               <Form.Input
                 type="text"
-                name="estabaDeLaAtencion"
-                value={formik.values.estabaDeLaAtencion}
+                name="establecimientoDeLaAtencion"
+                value={formik.values.establecimientoDeLaAtencion}
                 onChange={formik.handleChange}
-                error={formik.errors.estabaDeLaAtencion}
+                error={formik.errors.establecimientoDeLaAtencion}
               />
             </Grid.Column>
           </Grid.Row>
@@ -583,7 +598,7 @@ const initialState = (numeroAtencion = 2) => ({
   cita: "",
   visitaDomicilia: "",
   planParto: "",
-  estabaDeLaAtencion: "",
+  establecimientoDeLaAtencion: "",
   responsable: "",
   numeroFormatoSis: "",
 });
@@ -611,12 +626,6 @@ const validationSchema = () => {
       .positive("Solo números postivo.")
       .required("Este campo es requerido"),
     presionArterialNumerador: yup
-      .number()
-      .typeError("Solo se permiten números.")
-      .positive("Solo números postivo.")
-      .integer("Solo números enteros.")
-      .required("Este campo es requerido"),
-    presionArterialDenominador: yup
       .number()
       .typeError("Solo se permiten números.")
       .positive("Solo números postivo.")
@@ -651,7 +660,7 @@ const validationSchema = () => {
     cita: yup.string().required("Este campo es requerido."),
     visitaDomicilia: yup.string().required("Este campo es requerido."),
     planParto: yup.string().required("Este campo es requerido."),
-    estabaDeLaAtencion: yup.string().required("Este campo es requerido."),
+    establecimientoDeLaAtencion: yup.string().required("Este campo es requerido."),
     responsable: yup.string().required("Este campo es requerido."),
     numeroFormatoSis: yup.string().required("Este campo es requerido."),
   };
